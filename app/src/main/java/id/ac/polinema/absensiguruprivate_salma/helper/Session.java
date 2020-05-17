@@ -11,6 +11,8 @@ public class Session {
     private static final String LOGIN_TIME_PREF = "jam_login";
     private static final String LOGOUT_TIME_PREF = "jam_logout";
     private static final String DATE_PREF = "tanggal";
+    private static final String LOC_LATITUDE_PREF = "lokasi latitude";
+    private static final String LOC_LONGITUDE_PREF = "lokasi longitude";
 
     private SharedPreferences preferences;
 
@@ -68,5 +70,21 @@ public class Session {
 
     public void logout() {
         preferences.edit().clear().apply();
+    }
+
+    public void setLocLatitude(double latitude) {
+        preferences.edit().putLong(LOC_LATITUDE_PREF, Double.doubleToRawLongBits(latitude)).apply();
+    }
+
+    public double getLocLatitude() {
+        return Double.longBitsToDouble(preferences.getLong(LOC_LATITUDE_PREF, 0));
+    }
+
+    public void setLocLongitude(double longitude) {
+        preferences.edit().putLong(LOC_LONGITUDE_PREF, Double.doubleToRawLongBits(longitude)).apply();
+    }
+
+    public double getLocLongitude() {
+        return Double.longBitsToDouble(preferences.getLong(LOC_LONGITUDE_PREF, 0));
     }
 }

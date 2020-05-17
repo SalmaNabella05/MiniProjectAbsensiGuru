@@ -101,7 +101,7 @@ public class GuruItem extends AbstractItem<GuruItem, GuruItem.ViewHolder> {
 
     @NonNull
     @Override
-    public GuruItem.ViewHolder getViewHolder(View v) {
+    public ViewHolder getViewHolder(View v) {
         return new ViewHolder(v);
     }
 

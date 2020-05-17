@@ -39,7 +39,7 @@ public interface ApiInterface {
     );
 
     @POST("absenGuru")
-    Call<ResponseBody> absenGuru(@Body AbsenGuru absen);
+    Call<ResponseBody> absenGuru(@Body AbsenGuru absenGuru);
 
     @Multipart
     @POST("guru")
