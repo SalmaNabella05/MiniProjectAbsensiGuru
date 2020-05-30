@@ -1,10 +1,15 @@
 package id.ac.polinema.absensiguruprivate_salma.api;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import id.ac.polinema.absensiguruprivate_salma.model.AbsenGuru;
+import id.ac.polinema.absensiguruprivate_salma.model.Detail;
 import id.ac.polinema.absensiguruprivate_salma.model.GuruItem;
+import id.ac.polinema.absensiguruprivate_salma.model.Rekap;
+import id.ac.polinema.absensiguruprivate_salma.model.Siswa;
+import id.ac.polinema.absensiguruprivate_salma.model.SiswaAdmin;
 import id.ac.polinema.absensiguruprivate_salma.model.User;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -19,8 +24,8 @@ import retrofit2.http.PartMap;
 import retrofit2.http.Query;
 
 public interface ApiInterface {
-    @POST("loginAdmin")
-    Call<ResponseBody> loginAdmin(@Body User user);
+//    @POST("loginAdmin")
+//    Call<ResponseBody> loginAdmin(@Body User user);
 
     @POST("loginGuru")
     Call<ResponseBody> loginGuru(@Body User user);
@@ -46,5 +51,20 @@ public interface ApiInterface {
     Call<ResponseBody> tambahGuru(
             @Part MultipartBody.Part photo,
             @PartMap Map<String, RequestBody> text);
+
+    @GET("siswa")
+    Call<List<Siswa>> getSiswa();
+
+    @GET("siswa")
+    Call<List<SiswaAdmin>> getAllSiswa();
+
+    @POST("siswa")
+    Call<ResponseBody> tambahSiswa(@Body HashMap<String, RequestBody> siswa);
+
+    @GET("rekap")
+    Call<List<Rekap>> getRekap();
+
+    @GET("detailRekap")
+    Call<List<Detail>> getAbsenByUsernameForRekap(@Query("username") String username);
 
 }

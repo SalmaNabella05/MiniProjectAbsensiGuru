@@ -1,5 +1,8 @@
 package id.ac.polinema.absensiguruprivate_salma;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -15,6 +18,13 @@ import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -32,7 +42,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class FormActivity extends AppCompatActivity {
+public class TambahGuru extends AppCompatActivity {
     private ImageButton imageButton;
     private EditText inputId, inputNama, inputAlamat, inputTelp, inputUsername, inputPassword;
     private RadioGroup radioGroup;
@@ -43,9 +53,9 @@ public class FormActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_form);
+        setContentView(R.layout.activity_add_guru);
 
-        btnTambah = findViewById(R.id.btn_tambah_data_guru);
+        btnTambah = findViewById(R.id.bbtn_tambah_data_guru);
         inputNama = findViewById(R.id.edt_nama);
         inputAlamat = findViewById(R.id.edt_alamat);
         radioGroup = findViewById(R.id.group_jk);
@@ -57,7 +67,7 @@ public class FormActivity extends AppCompatActivity {
         imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                requestCameraPermission();
             }
         });
 
@@ -69,9 +79,50 @@ public class FormActivity extends AppCompatActivity {
         });
     }
 
-    private void selectImage() {
-        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(cameraIntent, 1);
+    private void requestCameraPermission() {
+        Dexter.withActivity(this).withPermission(Manifest.permission.CAMERA).withListener(new PermissionListener() {
+            @Override
+            public void onPermissionGranted(PermissionGrantedResponse response) {
+                openCamera();
+            }
+
+            @Override
+            public void onPermissionDenied(PermissionDeniedResponse response) {
+                if (response.isPermanentlyDenied()) {
+                    showDialog();
+                }
+            }
+
+            @Override
+            public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                token.continuePermissionRequest();
+            }
+        }).check();
+    }
+
+    private void openCamera() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        startActivityForResult(intent, 1);
+    }
+
+    private void showDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(TambahGuru.this);
+        builder.setTitle("Allow");
+        builder.setMessage("AbsensiGuruPrivate to access this device camera?");
+        builder.setPositiveButton("Allow", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+                openCamera();
+            }
+        });
+        builder.setNegativeButton("Deny", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+        builder.show();
     }
 
     @Override
@@ -102,6 +153,11 @@ public class FormActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return file;
+    }
+
+    private RequestBody createPartFromString(String description) {
+        return RequestBody.create(
+                okhttp3.MultipartBody.FORM, description);
     }
 
     private void tambahData() {
@@ -148,11 +204,5 @@ public class FormActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
-
-    }
-
-    private RequestBody createPartFromString(String description) {
-        return RequestBody.create(
-                MultipartBody.FORM, description);
     }
 }

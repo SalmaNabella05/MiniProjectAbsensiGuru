@@ -31,9 +31,9 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LoginGuruActivity extends AppCompatActivity {
-    private EditText inputUsername, inputPassword;
-    private Button loginButton;
+public class MainActivity extends AppCompatActivity {
+    private EditText username, password;
+    private Button button;
     private Session session;
 
     @Override
@@ -42,19 +42,26 @@ public class LoginGuruActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login_guru);
 
         session = new Session(getApplicationContext());
-        inputUsername = findViewById(R.id.edt_username_guru);
-        inputPassword = findViewById(R.id.edt_password_guru);
-        loginButton = findViewById(R.id.btn_login_guru);
+        username = findViewById(R.id.edt_username_guru);
+        password = findViewById(R.id.edt_password_guru);
+        button = findViewById(R.id.btnLoginTeacher);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+
+//        loginButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                guruLogin(inputUsername.getText().toString(), inputPassword.getText().toString());
+//            }
+//        });
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                userLogin(inputUsername.getText().toString(), inputPassword.getText().toString());
+                guruLogin(username.getText().toString(), password.getText().toString());
             }
         });
     }
 
-    private void userLogin(String username, String password) {
+    private void guruLogin(String username, String password) {
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
         Call<ResponseBody> call = apiInterface.loginGuru(new User(username, password));
@@ -70,8 +77,8 @@ public class LoginGuruActivity extends AppCompatActivity {
                         String currentTime = new SimpleDateFormat("HH:mm:ss", Locale.getDefault()).format(new Date());
                         String currentDate = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(new Date());
 
-                        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(LoginGuruActivity.this);
-                        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(LoginGuruActivity.this, new OnSuccessListener<Location>() {
+                        FusedLocationProviderClient fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(MainActivity.this);
+                        fusedLocationProviderClient.getLastLocation().addOnSuccessListener(MainActivity.this, new OnSuccessListener<Location>() {
                             @Override
                             public void onSuccess(Location location) {
                                 if (location != null) {
@@ -87,7 +94,7 @@ public class LoginGuruActivity extends AppCompatActivity {
                         session.setLoginTime(currentTime);
                         session.setDate(currentDate);
 
-                        Intent intent = new Intent(getApplicationContext(), GuruActivity.class);
+                        Intent intent = new Intent(getApplicationContext(), ListSiswaTeacher.class);
                         startActivity(intent);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -107,8 +114,8 @@ public class LoginGuruActivity extends AppCompatActivity {
 
     }
 
-    public void switchLoginAdmin(View view) {
-        Intent intent = new Intent(LoginGuruActivity.this, LoginAdmin.class);
+    public void handleback(View view) {
+        Intent intent = new Intent(MainActivity.this, LoginAdmin.class);
         startActivity(intent);
     }
 }

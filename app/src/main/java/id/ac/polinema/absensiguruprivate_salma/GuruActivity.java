@@ -61,16 +61,19 @@ public class GuruActivity extends AppCompatActivity {
         call1.enqueue(new Callback<List<AbsenGuru>>() {
             @Override
             public void onResponse(Call<List<AbsenGuru>> call, Response<List<AbsenGuru>> response) {
+                String x = getIntent().getStringExtra("nim");
+                String y = getIntent().getStringExtra("nama");
+
                 if (response.isSuccessful()) {
                     List<AbsenGuru> absenItems = response.body();
 
                     for (AbsenGuru item : absenItems) {
                         absen.add(new AbsenGuru(item.getUsername(), item.getPassword(), item.getJam_login(),
-                                item.getJam_logout(), item.getTanggal(), item.getLokasi_latitude(), item.getLokasi_longitude()));
+                                item.getJam_logout(), item.getTanggal(), item.getLokasi_latitude(), item.getLokasi_longitude(), item.getNim_siswa(), item.getNama()));
                     }
 
                     absen.add(new AbsenGuru(session.getUsername(), session.getPassword(), session.getLoginTime(),
-                            session.getLogoutTime(), session.getDate(), session.getLocLatitude(), session.getLocLongitude()));
+                            session.getLogoutTime(), session.getDate(), session.getLocLatitude(), session.getLocLongitude(), x, y));
 
                     itemAdapter.add(absen);
                     absenView.setAdapter(fastAdapter);
@@ -100,10 +103,12 @@ public class GuruActivity extends AppCompatActivity {
         String tanggal = session.getDate();
         double lokasi_latitude = session.getLocLatitude();
         double lokasi_longitude = session.getLocLongitude();
+        String nim_siswa = getIntent().getStringExtra("nim");
+        String nama_siswa = getIntent().getStringExtra("nama");
 
         ApiInterface apiInterface = ApiClient.getClient().create(ApiInterface.class);
 
-        Call<ResponseBody> call = apiInterface.absenGuru(new AbsenGuru(username, password, jam_login, jam_logout, tanggal, lokasi_latitude, lokasi_longitude));
+        Call<ResponseBody> call = apiInterface.absenGuru(new AbsenGuru(username, password, jam_login, jam_logout, tanggal, lokasi_latitude, lokasi_longitude, nim_siswa, nama_siswa));
 
         call.enqueue(new Callback<ResponseBody>() {
             @Override
@@ -111,7 +116,7 @@ public class GuruActivity extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     session.logout();
                     Toast.makeText(getApplicationContext(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getApplicationContext(), LoginGuruActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), MainActivity.class);
                     startActivity(intent);
                 } else {
                     Toast.makeText(getApplicationContext(), "Server Bermasalah, Silahkan Coba Lagi", Toast.LENGTH_LONG).show();
@@ -123,5 +128,10 @@ public class GuruActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), t.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    public void handleStudentsListByTeacher(View view) {
+        Intent intent = new Intent(GuruActivity.this, ListSiswaTeacher.class);
+        startActivity(intent);
     }
 }

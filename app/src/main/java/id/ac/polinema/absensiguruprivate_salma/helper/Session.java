@@ -13,6 +13,8 @@ public class Session {
     private static final String DATE_PREF = "tanggal";
     private static final String LOC_LATITUDE_PREF = "lokasi latitude";
     private static final String LOC_LONGITUDE_PREF = "lokasi longitude";
+    private static final String NIM_SISWA_PREF = "nim siswa";
+    private static final String NAMA_SISWA_PREF = "nama siswa";
 
     private SharedPreferences preferences;
 
@@ -86,5 +88,21 @@ public class Session {
 
     public double getLocLongitude() {
         return Double.longBitsToDouble(preferences.getLong(LOC_LONGITUDE_PREF, 0));
+    }
+
+    public String getNimSiswa() {
+        return preferences.getString(NIM_SISWA_PREF, "");
+    }
+
+    public void setNimSiswa(String nim) {
+        preferences.edit().putString(NIM_SISWA_PREF, nim).apply();
+    }
+
+    public String getNamaSiswa() {
+        return preferences.getString(NAMA_SISWA_PREF, "");
+    }
+
+    public void setNamaSiswa(String nama) {
+        preferences.edit().putString(NAMA_SISWA_PREF, nama).apply();
     }
 }

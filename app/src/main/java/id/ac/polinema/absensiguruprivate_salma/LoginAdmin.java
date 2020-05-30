@@ -12,8 +12,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import id.ac.polinema.absensiguruprivate_salma.helper.Session;
 
 public class LoginAdmin extends AppCompatActivity {
-    private EditText inputUsername, inputPassword;
-    private Button loginButton;
+    private EditText username, password;
+    private Button button;
     private Session session;
 
     @Override
@@ -22,14 +22,14 @@ public class LoginAdmin extends AppCompatActivity {
         setContentView(R.layout.activity_login_admin);
 
         session = new Session(getApplicationContext());
-        inputUsername = findViewById(R.id.edt_username_admin);
-        inputPassword = findViewById(R.id.edt_password_admin);
-        loginButton = findViewById(R.id.btn_login_admin);
+        username = findViewById(R.id.usernameAdmin);
+        password = findViewById(R.id.passwordAdmin);
+        button = findViewById(R.id.btnLoginAdmin);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(inputUsername.getText().toString().equals("admin") && inputPassword.getText().toString().equals("admin")) {
+                if (username.getText().toString().equals("admin") && password.getText().toString().equals("admin")) {
                     Intent intent = new Intent(LoginAdmin.this, AdminActivity.class);
                     startActivity(intent);
                 }
@@ -84,8 +84,8 @@ public class LoginAdmin extends AppCompatActivity {
 //        });
 //    }
 
-    public void switchLoginGuru(View view) {
-        Intent intent = new Intent(LoginAdmin.this, LoginGuruActivity.class);
+    public void handleLoginasTeacher(View view) {
+        Intent intent = new Intent(LoginAdmin.this, MainActivity.class);
         startActivity(intent);
     }
 }

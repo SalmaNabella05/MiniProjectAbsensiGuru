@@ -66,33 +66,38 @@ public class AdminActivity extends AppCompatActivity {
         });
     }
 
-    public void myOnClick(View view) {
-        Intent intent = new Intent(getApplicationContext(), FormActivity.class);
+    public void handleAdd(View view) {
+        Intent intent = new Intent(AdminActivity.this, TambahGuru.class);
         startActivity(intent);
     }
 
-    public void myOnClickLogout(View view) {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivity.this);
-//        builder.setCancelable(false);
-//        builder.setMessage("Apakah kamu ingin logout?");
-//        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                session.logout();
-//                Toast.makeText(getApplicationContext(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
-//                Intent intent = new Intent(getApplicationContext(), LoginAdminActivity.class);
-//                startActivity(intent);
-//            }
-//        });
-//        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                dialog.cancel();
-//            }
-//        });
-//        AlertDialog alert = builder.create();
-//        alert.show();
-        Intent intent = new Intent(AdminActivity.this, LoginAdmin.class);
-        startActivity(intent);
-    }
+//    public void myOnClick(View view) {
+//        Intent intent = new Intent(getApplicationContext(), TambahGuru.class);
+//        startActivity(intent);
+//    }
+
+//    public void myOnClickLogout(View view) {
+////        AlertDialog.Builder builder = new AlertDialog.Builder(AdminActivity.this);
+////        builder.setCancelable(false);
+////        builder.setMessage("Apakah kamu ingin logout?");
+////        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+////            @Override
+////            public void onClick(DialogInterface dialog, int which) {
+////                session.logout();
+////                Toast.makeText(getApplicationContext(), "Logout Berhasil", Toast.LENGTH_SHORT).show();
+////                Intent intent = new Intent(getApplicationContext(), LoginAdminActivity.class);
+////                startActivity(intent);
+////            }
+////        });
+////        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+////            @Override
+////            public void onClick(DialogInterface dialog, int which) {
+////                dialog.cancel();
+////            }
+////        });
+////        AlertDialog alert = builder.create();
+////        alert.show();
+//        Intent intent = new Intent(AdminActivity.this, LoginAdmin.class);
+//        startActivity(intent);
+//    }
 }

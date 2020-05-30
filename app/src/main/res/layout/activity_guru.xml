@@ -6,13 +6,12 @@
     android:layout_height="match_parent"
     tools:context=".GuruActivity">
 
-
     <TextView
         android:id="@+id/judul"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Riwayat Login"
+        android:text="Your Login History"
         android:textStyle="bold"
         android:textSize="24sp"
         android:textAlignment="center"
@@ -32,18 +31,18 @@
         app:layout_constraintTop_toBottomOf="@id/judul" />
 
     <Button
-        android:id="@+id/btn_logout"
-        android:layout_width="wrap_content"
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Logout"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="@color/colorPrimary"
         android:textColor="#FFFFFF"
-        android:layout_margin="15dp"
-        android:backgroundTint="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:onClick="handleLogout"
+        android:text="Logout"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:fabSize="normal"
-        app:borderWidth="0dp"
-        app:elevation="6dp"
-        android:onClick="handleLogout"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

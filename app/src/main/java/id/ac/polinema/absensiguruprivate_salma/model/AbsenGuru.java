@@ -23,8 +23,10 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
     private String tanggal;
     private double lokasi_latitude;
     private double lokasi_longitude;
+    private String nim_siswa;
+    private String nama;
 
-    public AbsenGuru(String username, String password, String jam_login, String jam_logout, String tanggal, double lokasi_latitude, double lokasi_longitude) {
+    public AbsenGuru(String username, String password, String jam_login, String jam_logout, String tanggal, double lokasi_latitude, double lokasi_longitude, String nim_siswa, String nama) {
         this.username = username;
         this.password = password;
         this.jam_login = jam_login;
@@ -32,6 +34,8 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
         this.tanggal = tanggal;
         this.lokasi_latitude = lokasi_latitude;
         this.lokasi_longitude = lokasi_longitude;
+        this.nim_siswa = nim_siswa;
+        this.nama = nama;
     }
 
     public String getUsername() {
@@ -82,6 +86,14 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
         return lokasi_longitude;
     }
 
+    public String getNim_siswa() {
+        return nim_siswa;
+    }
+
+    public String getNama() {
+        return nama;
+    }
+
     @NonNull
     @Override
     public ViewHolder getViewHolder(View v) {
@@ -100,7 +112,7 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
 
 
     public class ViewHolder extends FastAdapter.ViewHolder<AbsenGuru> {
-        private TextView jam_login, jam_logout, tanggal, latitude, longitude;
+        private TextView jam_login, jam_logout, tanggal, latitude, longitude, nama;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -109,6 +121,7 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
             tanggal = itemView.findViewById(R.id.txt_tanggal);
             latitude = itemView.findViewById(R.id.txt_lokasi_latitude);
             longitude = itemView.findViewById(R.id.txt_lokasi_longitude);
+            nama = itemView.findViewById(R.id.txt_siswa_diajar);
         }
 
         @Override
@@ -118,6 +131,7 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
             tanggal.setText(item.tanggal);
             latitude.setText(String.valueOf(item.lokasi_latitude));
             longitude.setText(String.valueOf(item.lokasi_longitude));
+            nama.setText(item.nama);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -138,6 +152,7 @@ public class AbsenGuru extends AbstractItem<AbsenGuru, AbsenGuru.ViewHolder> {
             tanggal.setText(null);
             latitude.setText(null);
             longitude.setText(null);
+            nama.setText(null);
         }
     }
 }
